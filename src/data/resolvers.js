@@ -32,5 +32,28 @@ export const resolvers = {
         });
       });
     },
+
+    updateContact: (root, { input }) => {
+      return new Promise((resolve, reject) => {
+        Contacts.findOneAndUpdate(
+          { _id: input.id },
+          input,
+          { new: true },
+          (err, contact) => {
+            if (err) reject(err);
+            else resolve(contact);
+          }
+        );
+      });
+    },
+
+    deleteContact: (root, { id }) => {
+      return new Promise((resolve, reject) => {
+        Contacts.remove({ _id: id }, (err) => {
+          if (err) reject(err);
+          else resolve(`${id} deleted`);
+        });
+      });
+    },
   },
 };
